@@ -128,8 +128,9 @@ def metric_wrapper_func(metric_name):
     return metric_wrapper
 
 def count_rows():
+    count_rows = 
 
-def count_rows_per_domain():
+def count_rows_per_domain(self):
     count_rows_per_domain = self.data.filter(self.data["name"] == func.__name__) \
         .select("name", "domain", "value", "expected", "difference", "relativedifference", "threshold", "z_score", "verdict")
     nok_data = count_rows_per_domain.filter(count_rows_per_domain["verdict"] != "OK").groupBy(F.desc("difference"))
@@ -139,7 +140,7 @@ def count_rows_per_domain():
     monitoring_result = metric_wrapper[:insert_position] + legend + results + metric_wrapper[insert_position:]
     return monitoring_result
 
-def count_rows_per_dataset():
+def count_rows_per_dataset(self):
     count_rows_per_dataset = self.data.filter(self.data["name"] == func.__name__) \
         .select("name", "domain", "dataset", "value", "expected", "difference", "relativedifference", "threshold", "z_score", "verdict")
     nok_data = count_rows_per_dataset.filter(count_rows_per_dataset["verdict"] != "OK").groupBy(F.desc("difference"))
@@ -149,9 +150,9 @@ def count_rows_per_dataset():
     monitoring_result = metric_wrapper[:insert_position] + legend + results + metric_wrapper[insert_position:]
     return monitoring_result
 
-def count_unique_panelists():
+def count_unique_panelists(self):
 
-def count_unique_panelists_per_domain():
+def count_unique_panelists_per_domain(self):
     count_unique_panelists_per_domain = self.data.filter(self.data["name"] == func.__name__) \
         .select("name", "domain", "value", "expected", "difference", "relativedifference", "threshold", "z_score", "verdict")
     nok_data = count_unique_panelists_per_domain.filter(count_unique_panelists_per_domain["verdict"] != "OK").groupBy(F.desc("difference"))
@@ -161,7 +162,7 @@ def count_unique_panelists_per_domain():
     monitoring_result = metric_wrapper[:insert_position] + legend + results + metric_wrapper[insert_position:]
     return monitoring_result
 
-def count_unique_panelists_per_dataset():
+def count_unique_panelists_per_dataset(self):
     count_unique_panelists_per_dataset = self.data.filter(self.data["name"] == func.__name__) \
         .select("name", "domain", "dataset", "value", "expected", "difference", "relativedifference", "threshold", "z_score", "verdict")
     nok_data = count_unique_panelists_per_dataset.filter(count_unique_panelists_per_dataset["verdict"] != "OK").groupBy(F.desc("difference"))
@@ -173,7 +174,7 @@ def count_unique_panelists_per_dataset():
 
 
 
-def count_behaviors_per_domain():
+def count_behaviors_per_domain(self):
     count_behaviors_per_domain = self.data.filter(self.data["name"] == func.__name__) \
         .select("name", "domain", "behavior", "value", "expected", "difference", "relativedifference", "threshold", "z_score", "verdict")
     nok_data = count_behaviors_per_domain.filter(count_behaviors_per_domain["verdict"] != "OK").groupBy(F.desc("difference"))
@@ -184,7 +185,7 @@ def count_behaviors_per_domain():
     return monitoring_result
 
 
-def count_behaviors_with_extracted_pids_per_domain():
+def count_behaviors_with_extracted_pids_per_domain(self):
     count_behaviors_with_extracted_pids_per_domain = self.data.filter(self.data["name"] == func.__name__) \
         .select("name", "domain", "behavior", "value", "expected", "difference", "relativedifference", "threshold", "z_score", "verdict")
     nok_data = count_behaviors_with_extracted_pids_per_domain.filter(count_behaviors_with_extracted_pids_per_domain["verdict"] != "OK") \
