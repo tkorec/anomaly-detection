@@ -1,40 +1,53 @@
 from pandas import DataFrame
+import ModelARIMA
 
-class Metrics:
+class MetricsPF:
 
 
-    def __init__(self, aggregated_data: DataFrame, cube_data: DataFrame) -> None:
+    def __init__(self, aggregated_data: DataFrame, cube_data: DataFrame, result_data: DataFrame) -> None:
         self.aggregated_data = aggregated_data
         self.cube_data = cube_data
-        self.model = Model(data: DataFrame)
+        self.result_data = result_data
+        self.model_arima = ModelARIMA()
+        self.model = self.model_arima.model(self, data, attributes)
         self.results = []
 
 
 
     def number_of_events_per_domain(self) -> DataFrame:
-        number_of_events_per_domain = self.aggregated_data.groupby("date", "domain", "behavior").agg(spark_sum("events").alias("events"))
-        unique_combinations = number_of_events_per_domain.select("domain", "behavior").distinct()
+        number_of_events_per_domain = self.aggregated_data.groupby("date", "domain", "dataset", "behavior").agg(spark_sum("events").alias("events"))
+        unique_combinations = number_of_events_per_domain.select("domain", "dataset", "behavior").distinct()
 
-    
         for i in range(0, len(unique_combinations)):
             domain = unique_combinations.collect()[i]["domain"]
+            dataset = unique_combinations.collect()[i]["dataset"]
             behavior = unique_combinations.collect()[i]["behavior"]
             data = number_of_events_per_domain.filter(
                 (number_of_events_per_domain["domain"] == domain) & 
                 (number_of_events_per_domain["behavior"] == behavior)).select("date", "events") 
+            attributes = self.result_data.filter(
+                (self.result_data["name"] == func.__name__) &
+                (self.result_data["domain"] == domain) &
+                (self.result_data["dataset"] == dataset) &
+                (self.result_data["behavior"] == behavior) 
+            ).select("attributes")
             data = data.orderBy("date")
 
-            forecast, verdict, p, d, q = self.model(data)
+            current_day, expected, verdict, p, d, q = self.model(data, attributes)
+            relative_difference = abs(current_day - expected) / (expected + 1e-6)
+            z_score = (abs(current_day - expected)) / relative_difference.std()
 
             result_input = {
-                "date": "",
-                "metric": "number-of-events-per-domain",
-                "domain": domain, 
-                "behavior": behavior, 
-                "forecast": forecast, 
-                "confidential_interval": confidential_interval,
-                "current_day_value": current_day_value,
+                "name": func.__name__,
+                "value": current_day,
+                "expected": expected,
+                "relative difference": relative_difference,
                 "verdict": verdict,
+                "threshold": 2,
+                "z_score": z_score,
+                "behavior": behavior,
+                "dataset": dataset,
+                "domain": domain,
                 "attributes": [p, d, q]
                 }
             
