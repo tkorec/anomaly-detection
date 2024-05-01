@@ -4,7 +4,8 @@ import ModelARIMA
 class MetricsPF:
 
 
-    def __init__(self, aggregated_data: DataFrame, cube_data: DataFrame, result_data: DataFrame) -> None:
+    def __init__(self, spark: SparkSession, aggregated_data: DataFrame, cube_data: DataFrame, result_data: DataFrame) -> None:
+        self.spark = spark
         self.aggregated_data = aggregated_data
         self.cube_data = cube_data
         self.result_data = result_data

@@ -1,5 +1,5 @@
 from pandas import DataFrame
-import Model
+import Development.Model as Model
 
 class Metrics:
 

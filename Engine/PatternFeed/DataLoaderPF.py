@@ -24,7 +24,7 @@ class DataLoader:
     Code iterates through all S3 locations of the specified bucket and prefix and downloads
     files only from the ones, where 
     """
-    def load_aggregated_data():
+    def load_aggregated_data() -> DataFrame:
 
         s3_client = boto3.client("s3")
         bucket_name = "asc-clickstream-emr-output"
@@ -57,7 +57,7 @@ class DataLoader:
         return agg_data
     
 
-    def load_cubed_data():
+    def load_cubed_data() -> DataFrame:
 
         s3_client = boto3.client("s3")
         bucket_name = "asc-clickstream-emr-output"
@@ -92,8 +92,9 @@ class DataLoader:
     """
     Function loads only the latest day file
     """
-    def load_parameters():
+    def load_results() -> DataFrame:
 
+        return result_data
     
 
 
