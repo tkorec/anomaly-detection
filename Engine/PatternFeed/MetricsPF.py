@@ -34,7 +34,7 @@ class MetricsPF:
             ).select("attributes")
             data = data.orderBy("date")
 
-            current_day, expected, verdict, p, d, q = self.model(data, attributes)
+            current_day, expected, verdict, parameters = self.model(data, attributes)
             relative_difference = abs(current_day - expected) / (expected + 1e-6)
             z_score = (abs(current_day - expected)) / relative_difference.std()
 
@@ -49,7 +49,7 @@ class MetricsPF:
                 "behavior": behavior,
                 "dataset": dataset,
                 "domain": domain,
-                "attributes": [p, d, q]
+                "attributes": parameters
                 }
             
             self.results.append(result_input)
