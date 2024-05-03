@@ -55,16 +55,21 @@ class ModelARIMA:
     # and verdict of the monitoring is therefore OK.
     # If forecasted value lies outside the confidence interval, we observe an outlier values and verdict of the
     # monitoring is therefore NOK
-    def confidential_boundaries_verdict(forecast, conf_int):
+    def confidential_boundaries_verdict(forecast, conf_int, current_day):
         upper_bound = conf_int[1]
         lower_bound = conf_int[0]
+        error_difference = abs(current_day - forecast) / forecast
         if lower_bound < forecast < upper_bound:
             verdict = "OK"
+        elif error_difference >= 0.5:
+            verdict = "ERROR"
+        elif current_day == 0:
+            verdict = "MISSING"
         else:
             verdict = "NOK"
         return verdict
     
-    
+
     def arima_model(series, parameters):
         order = tuple(parameters[0])
         seasonal_order = tuple(parameters[1])
@@ -108,7 +113,7 @@ class ModelARIMA:
         # Except for the expected value based on model's prediction, 
         # ARIMA model returned us also confidence interval – standard deviation from the expected/forecasted value.
         # Verdict is made based on whether the expected value lies within or outside confident interval
-        verdict = self.confidential_boundaries_verdict(forecast, conf_int)
+        verdict = self.confidential_boundaries_verdict(forecast, conf_int, current_day)
 
         return current_day, forecast, verdict, parameters
 
