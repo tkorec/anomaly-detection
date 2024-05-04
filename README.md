@@ -12,26 +12,6 @@ especially while circumstances reperesented by time series don't change at a fas
 saving expanses if the engine runs in AWS environment.
 
 Structure:
-Engine file/class
 
-
-Data Loader file/class:
-Aggregated data (contains data for aggregated metrics) for monitoring from asc-clickstream-emr-output/trendlines/p2p/agg/data_version=dataset576_V11/ 
-for P2P and asc-clickstream-emr-output/trendlines/pf/agg/data_version=dataset576_V11/ for PF is loaded and stored in Spark DataFrame
-Cubed data for monitoring from asc-clickstream-emr-output/trendlines/p2p/cube/data_version=dataset576_V11/ for P2P
-and asc-clickstream-emr-output/trendlines/pf/cube/data_version=dataset576_V11/ for PF is loaded and stored in Spyrk DataFrame
-Result data 
-
-Metrics file/class
-
-
-Model file/class:
-Model file/class contains all statistical tests and methods for pre-processing time series before their modeling as well as models
-and modeling algorithms themselves. The main method called from metrics functions is model method that calls statistical tests
-and required pre-processing fuctions based on the result of the statistical tests. The ARIMA model's parameters (p, d, q) for a particular
-time series, time series for a particular combination of metric, domain, dataset, behavior, patternId, etc., retrieved from Result DataFrame
-is passed to modeling function (arima_model func.) that return predicted value and confidence interval. It also returns model's parameters
-which are same as the ones passed to the function. On a specified day on which the retarining of the models is required, the hyndman_khandakarr
-method is called instead of arima_model method. Hyndman_khandakar method performs Hyndman&Khandakar algorithms for finding new model. It then
-return expected value based on time series, confidence interval, and new model's parameters that are stored to Results and used until the
-next retraining of models.
+Anomaly Detection engines consist of pipelines for monitoring itself that is to be executed when aggregated and cubed metrics are counted
+successfully. After Anomaly Detection successful completion and storing Result file to S3, Reporting pipeline is to be executed.
