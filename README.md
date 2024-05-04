@@ -15,10 +15,17 @@ Structure:
 Engine file/class
 
 
-Data Loader file/class
-
+Data Loader file/class:
+Aggregated data for monitoring from asc-clickstream-emr-output/trendlines/p2p/agg/data_version=dataset576_V11/ for P2P 
+and asc-clickstream-emr-output/trendlines/pf/agg/data_version=dataset576_V11/ for PF is loaded and stored in Spark DataFrame
+Cubed data for monitoring from asc-clickstream-emr-output/trendlines/p2p/cube/data_version=dataset576_V11/ for P2P
+and asc-clickstream-emr-output/trendlines/pf/cube/data_version=dataset576_V11/ for PF is loaded and stored in Spyrk DataFrame
+Result data 
 
 Metrics file/class
 
 
-Model file/class
+Model file/class:
+Model file/class contains all statistical tests and methods for pre-processing time series before their modeling as well as models
+and modeling algorithms themselves. The main method called from metrics functions is model method that calls statistical tests
+and required pre-processing fuctions based on the result of the statistical tests. 
