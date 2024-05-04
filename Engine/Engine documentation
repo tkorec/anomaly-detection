@@ -1,13 +1,18 @@
 Structure:
+
 Engine file/class
 
 
 Data Loader file/class:
-Aggregated data (contains data for aggregated metrics) for monitoring from asc-clickstream-emr-output/trendlines/p2p/agg/data_version=dataset576_V11/ 
-for P2P and asc-clickstream-emr-output/trendlines/pf/agg/data_version=dataset576_V11/ for PF is loaded and stored in Spark DataFrame
-Cubed data for monitoring from asc-clickstream-emr-output/trendlines/p2p/cube/data_version=dataset576_V11/ for P2P
-and asc-clickstream-emr-output/trendlines/pf/cube/data_version=dataset576_V11/ for PF is loaded and stored in Spyrk DataFrame
-Result data 
+Aggregated data contains aggregated metrics for monitoring. It is loaded from 
+asc-clickstream-emr-output/trendlines/p2p/agg/data_version=dataset576_V11/ for P2P and 
+asc-clickstream-emr-output/trendlines/pf/agg/data_version=dataset576_V11/ for PF and stored in Spark DataFrames.
+Cubed data  contains ciubed metrics for monitoring. It is loaded from 
+asc-clickstream-emr-output/trendlines/p2p/cube/data_version=dataset576_V11/ for P2P and
+asc-clickstream-emr-output/trendlines/pf/cube/data_version=dataset576_V11/ for PF and stored in Spark DataFrames.
+Result data contains results for the metrics from previous days including used ARIMA model's parameters. Result data
+is used for creating report after the monitoring completion as well as for reusing found ARIMA model's parameters,
+so the Hyndman&Khandakar algorithm doesn't have to be executed every day.
 
 *****************
 
