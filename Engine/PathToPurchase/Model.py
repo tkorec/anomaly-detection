@@ -12,6 +12,7 @@ class ModelARIMA:
     def __init__(self) -> None:
         pass
 
+
     # If data isn't normally distributed, it can be transformed via BoxCox transformation, so data is normally distributed
     def boxcox_transformation(data):
         boxcox_transformed_data, _ = boxcox(data.iloc[:, 0] + 10)
@@ -102,7 +103,6 @@ class ModelARIMA:
         series = data[:-1]
         current_day = data[-1:]
     
-
         # So the modeling/predicting runs faster, we use ARIMA model found by Hyndman & Khandakar auto ARIMA algorithm for 2 months.
         # On the 1st of every second month, after completely new data exist, the models for time series are retrained
         if (datetime.now().month % 2) == 1 and datetime.now().day == 1:

@@ -14,6 +14,29 @@ class Metrics:
         self.results = []
 
 
+    """
+    Every function in this file is dedicated to one metric. The reason of creating one method for each metric, despite the code repeats itself,
+    is primarily because of organization, readability, easier adding, deteting, or updating metrics, because if I refactored code and created
+    shared functions for some metrics, there would be also a lot of exceptions because of metrics that measure different counts than events, e.g.,
+    bot_panelists, events_by_products_not_null_pid, etc.
+
+    Each function works the same way:
+    1/ The metric's data is selected form dataset where the metric's data is situated (cube or aggregated data; some metrics appears in both, 
+    so I took them from cube dataset since it is more comprehensive) by grouping granularity parameters of a metric and date and summing 
+    the analyzed counts – the sum is required as we have metrics for "All" datasets or "All" domains and we need the overall count for
+    all that datasets, domains, etc.
+    2/ The list of unique combinations of metrics is created, e.g., number_of_events per Costco, per Walmart, ...
+    3/ We iterate through the list of unique metrics, select only data related to the particular metric, i.e., particular combination of
+    domain, dataset, etc., sort this dataset by date so we have a time series.
+    4/ Parameters for ARIMA model are selected from result_data dataframe for the particular metric, e.g., particular combination of domain,
+    dataset, etc.
+    5/ Time series and parameters are used for calling model function in Model class that returns current day value, expected value for current
+    day found by model, verdict of decision making process (is current value within the threshold of expected value, is current value missing?),
+    and parameters of model.
+    6/ The outputs of model function are used for creating result report for current day that is then stored to S3. Report is then build upon this
+    report and the parameters for ARIMA model for the particular metric from this report are used the following day for again
+    """
+    
     def number_of_events_per_domain(self) -> None:
         number_of_events_per_domain = self.cube_data.groupby("date", "domain", "behavior").agg(spark_sum("events_by_product").alias("events_by_product"))
         unique_combinations = number_of_events_per_domain.select("domain", "behavior").distinct()
