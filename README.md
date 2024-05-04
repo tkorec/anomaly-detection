@@ -1,4 +1,5 @@
 Objectives:
+
 Because of metrics quantity, their granularities (per domains, datasets, patternIds, behaviors, etc.), and number of analysed domains,
 hundreds of time series must be monitored every day for making their futures values prediction and therefore recognizing potential
 anomalies. It is a common task solved in Business Inteligence area for which commercial softwares depending on auto ARIMA algorithms 
