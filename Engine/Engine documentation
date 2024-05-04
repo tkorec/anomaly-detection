@@ -9,3 +9,15 @@ static ARIMA model for a defined time, so the Hyndman&Khandakar algorithm doesn'
 especially while circumstances reperesented by time series don't change at a fast pace. It allows decreasing computing time, potentially
 saving expanses if the engine runs in AWS environment.
 
+Structure:
+Engine file/class
+
+
+Data Loader file/class
+
+
+Metrics file/class
+
+
+Model file/class
+
